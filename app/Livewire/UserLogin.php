@@ -15,16 +15,15 @@ class UserLogin extends Component
 
     public function login()
     {
-        $attributes = $this->validate(['email' => 'required|string|email|min:3', 'password' => 'required|string']);
+        $attributes = $this->validate(['email' => 'required|string|email|min:3', 'password' => 'required|string|min:3']);
 
-        if (! auth()->attempt($attributes)) {
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
+        if (auth()->attempt($attributes)) {
+            session()->flash('message', 'Login Successful');
+            return redirect()->intended('/dashboard');
         }
-
-        session()->regenerate();
-        return redirect()->intended('/dashboard');
+        else {
+            session()->flash('error', 'Invalid credentials');
+        }
     }
 
     public function render()

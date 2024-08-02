@@ -51,14 +51,15 @@ class BookingController extends Controller
     public function allBookings(): JsonResponse
     {
         $user = Auth::user();
-        if (!$user) {
+        if (!$user->is_admin == 1) {
             return $this->respondUnAuthenticated();
+        } else {
+
+            $bookings = Booking::all();
+
+            return $this->respondWithSuccess([
+                'bookings' => $bookings,
+            ]);
         }
-
-        $bookings = Booking::all();
-
-        return $this->respondWithSuccess([
-            'bookings' => $bookings,
-        ]);
     }
 }

@@ -1,6 +1,6 @@
 <div class="min-h-full justify-center px-6 py-12 mt-10 lg:px-8">
     <div >
-        @if(Auth::user() && Auth::user()->name === 'Emma Wediah')
+        @if(Auth::user() && Auth::user()->is_admin === 1)
             <h1 class="font-bold text-2xl py-4">All Bookings</h1>
             @if($allBookings->isEmpty())
                 <p>You have no bookings</p>

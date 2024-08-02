@@ -26,7 +26,7 @@ class UserRegister extends Component
         );
 
         session()->flash('success', 'You have registered successfully.');
-        return redirect(route('login'));
+        return redirect()->to(route('dashboard'));
     }
     public function render()
     {

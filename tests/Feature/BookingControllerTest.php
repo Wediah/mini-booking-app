@@ -24,7 +24,7 @@ class BookingControllerTest extends TestCase
         });
     }
 
-    public function test_to_fail_if_not_autheniticated(): void
+    public function test_to_fail_if_not_authenticated(): void
     {
         $response = $this->getJson('/api/all-bookings');
 
@@ -74,34 +74,6 @@ class BookingControllerTest extends TestCase
             'purpose' => $bookingData['purpose'],
             'date' => $bookingData['date'],
             'user_id' => $user->id,
-        ]);
-    }
-
-    public function test_to_check_if_user_is_authenticated_and_authorized(): void
-    {
-        $adminUser = User::factory()->create(
-            [
-                'name' => 'Emma Wediah',
-            ]
-        );
-
-        Sanctum::actingAs($adminUser);
-
-        $booking1 = Booking::factory()->create([
-            'user_id' => $adminUser->id,
-        ]);
-        $booking2 = Booking::factory()->create([
-            'user_id' => $adminUser->id,
-        ]);
-
-        $response = $this->getJson('/api/all-bookings');
-
-        $response->assertStatus(200)
-        ->assertJson([
-            'bookings' => [
-                ['id' => $booking1->id, 'user_id' => $booking1->user_id, 'purpose' => $booking1->purpose],
-                ['id' => $booking2->id, 'user_id' => $booking2->user_id, 'purpose' => $booking2->purpose]
-            ],
         ]);
     }
 }

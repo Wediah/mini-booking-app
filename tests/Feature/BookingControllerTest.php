@@ -24,7 +24,7 @@ class BookingControllerTest extends TestCase
         });
     }
 
-    public function test_to_fail_if_not_autheniticated(): void
+    public function test_to_fail_if_not_authenticated(): void
     {
         $response = $this->getJson('/api/all-bookings');
 
